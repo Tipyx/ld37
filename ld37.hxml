@@ -1,0 +1,9 @@
+-lib castle
+-lib heaps
+-cp src
+-swf bin/client.swf
+-swf-header 800:600:60:000000
+-swf-version 21
+-D standalone
+-main Main
+-dce no
