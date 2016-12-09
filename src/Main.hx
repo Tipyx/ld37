@@ -1,15 +1,22 @@
 class Main extends hxd.App
 {
+	var game					: Game;
+
+	public static var ME		: Main;
+
     override function init() {
 		super.init();
 
-        trace("trololo");
-
-		var gr = new h2d.Graphics(s2d);
-		gr.beginFill(0xFFFFFF);
-		gr.drawRect(0, 0, 100, 100);
-		gr.endFill();
+		ME = this;
+		
+		game = new Game();
     }
+
+	override public function update(dt:Float) {
+		super.update(dt);
+
+		mt.Process.updateAll(dt);
+	}
 
 	static function main() {
 		hxd.Res.initEmbed();
