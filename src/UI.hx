@@ -1,10 +1,3 @@
-enum GaugeType {
-    Libido;
-    Health;
-    Money;
-    Social;
-}
-
 class UI extends mt.Process {
 
     public static var ME    : UI;
@@ -40,8 +33,8 @@ class UI extends mt.Process {
         root.addChild(gauSoc);
     }
 
-    public function openObjectWindow() {
-        ow = new ObjectWindow();
+    public function openObjectWindow(object:DCDB.Choice_object) {
+        ow = new ObjectWindow(object);
         ow.setPos(100, 100);
         root.addChild(ow);
     }
@@ -60,19 +53,26 @@ class UI extends mt.Process {
 
         if (ow != null)
             ow.update();
+
+        gauLib.update();
+        gauHea.update();
+        gauMon.update();
+        gauSoc.update();
     }
 }
 
 class Gauge extends h2d.Layers {
 
-    var gt              : GaugeType;
+    var gt              : DCDB.Choice_effects_gauge;
     var isOnLeft        : Bool;
 
     public static var WID = Const.GRID * 2.5 * Const.SCALE;
 
     public var point    : Float;
 
-    public function new(gt:GaugeType, isOnLeft:Bool) {
+    var gauge           : h2d.Graphics;
+
+    public function new(gt:DCDB.Choice_effects_gauge, isOnLeft:Bool) {
         super();
 
         this.gt = gt;
@@ -83,7 +83,7 @@ class Gauge extends h2d.Layers {
         gaugeBG.drawRect(0, 0, WID, Const.GRID);
         this.addChild(gaugeBG);
 
-        var gauge = new h2d.Graphics();
+        gauge = new h2d.Graphics();
         gauge.beginFill(0x00AA00);
         gauge.drawRect(0, 0, WID, Const.GRID);
         gauge.scaleX = 0.5;
@@ -99,28 +99,45 @@ class Gauge extends h2d.Layers {
             gauge.scaleX = -0.5;
         }
     }
+
+    public function update() {
+        switch (gt) {
+            case Libido :
+                gauge.scaleX = GD.ME.LIB / 100;
+            case Health :
+                gauge.scaleX = GD.ME.HEA / 100;
+            case Money :
+                gauge.scaleX = -GD.ME.MON / 100;
+            case Social :
+                gauge.scaleX = -GD.ME.SOC / 100;
+        }
+    }
 }
 
 class ObjectWindow extends h2d.Layers {
 
     var arrow               : mt.heaps.slib.HSprite;
 
-    var arChoice            : Array<Choice>;
+    var arChoice            : Array<ChoiceUI>;
     var curChoiceIndex      : Int;
 
     var wid                 = 300;
     var offsetX             = 10;
     var offsetY             = 10;
 
-    public function new() {
+    var object              : DCDB.Choice_object;
+
+    public function new(object:DCDB.Choice_object) {
         super();
+
+        this.object = object;
 
         arChoice = [];
         curChoiceIndex = 0;
         
         // ------- BASE -------
         var txtObject = new h2d.Text(Const.FONT);
-        txtObject.text = "Object Name";
+        txtObject.text = getNameObject();
         txtObject.textAlign = Center;
         txtObject.x = Std.int(wid * 0.5);
         txtObject.y = offsetY;
@@ -147,12 +164,20 @@ class ObjectWindow extends h2d.Layers {
         this.add(bg, 0);
     }
 
-    function initChoice(by:Float) {
-        for (i in 0...2) {
-            var choice = new Choice();
+    inline function getNameObject():String {
+        return switch (object) {
+            case Bed : "Bed";
+        }
+    }
+
+    function initChoice(baseY:Float) {
+        var cds = DCDB.choice.all.filter(function (f) return f.object == object);
+
+        for (cd in cds) {
+            var choice = new ChoiceUI(cd);
             choice.x = offsetX;
-            choice.y = Std.int(by);
-            by += choice.getBounds().height + 10;
+            choice.y = Std.int(baseY);
+            baseY += choice.getBounds().height + 10;
             arChoice.push(choice);
             this.add(choice, 1);
         }
@@ -184,15 +209,15 @@ class ObjectWindow extends h2d.Layers {
     }
 }
 
-class Choice extends h2d.Layers {
+class ChoiceUI extends h2d.Layers {
 
     var txtChoice                   : h2d.Text;
 
-    public function new() {
+    public function new(c:DCDB.Choice) {
         super();
 
         txtChoice = new h2d.Text(Const.FONT);
-        txtChoice.text = "Choice";
+        txtChoice.text = c.name;
         this.addChild(txtChoice);
     }
 

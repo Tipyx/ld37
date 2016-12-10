@@ -19,13 +19,17 @@ class Entity extends h2d.Layers {
     public var wid         : Int;
     public var hei         : Int;
 
-    public function new (ncx:Int, ncy:Int) {
+    public var type        : Null<DCDB.Choice_object>;
+
+    public function new (ncx:Int, ncy:Int, type:Null<DCDB.Choice_object>) {
         super();
 
         cx = ncx;
         cy = ncy;
         xr = yr = 0;
         dx = dy = 0;
+
+        this.type = type;
 
         var dbg = new h2d.Graphics(this);
         dbg.lineStyle(1, 0xFF0000);

@@ -14,6 +14,7 @@ class Game extends mt.Process {
 
 	public var arCol      	: Array<h2d.col.Point>;
 
+	var gd					: GD;
 	var ui					: UI;
 
 	public function new() {
@@ -47,13 +48,15 @@ class Game extends mt.Process {
 
 		// INIT ENTITIES
 
-		bed = new Bed (1, 7);
+		bed = new Bed (1, 7, Bed);
 		root.addChild(bed);
 
-		hero = new Hero(6, 6);
+		hero = new Hero(6, 6, null);
 		root.addChild(hero);
 
 		// OTHERS
+
+		gd = new GD();
 		
 		ui = new UI();
 		addChild(ui);
@@ -80,7 +83,7 @@ class Game extends mt.Process {
 	}
 
     public function checkCol(ncx:Float, ncy:Float):Bool {
-        if (ncx < 0 || ncx >= 15 || ncy < 0 || ncy >= 15)
+        if (ncx < 0 || ncx >= 12 || ncy < 0 || ncy >= 12)
             return true;
 
         for (col in arCol) {
@@ -96,15 +99,15 @@ class Game extends mt.Process {
 		return !ui.objectWindowIsOpen();
 	}
 
-	public function heroIsNearEntity():Bool {
+	public function heroIsNearObject():Null<DCDB.Choice_object> {
 		for (e in Entity.ALL) {
 			if (e != hero) {
 				if (mt.deepnight.Lib.distanceSqr(e.xx, e.yy, hero.xx, hero.yy) <= Const.GRID * Const.GRID)
-					return true;
+					return e.type;
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 	override public function update() {

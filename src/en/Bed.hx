@@ -2,8 +2,8 @@ package en;
 
 class Bed extends Entity {
 
-    public function new(ncx, ncy) {
-        super(ncx, ncy);
+    public function new(ncx, ncy, type) {
+        super(ncx, ncy, type);
 
         wid = 1;
         hei = 2;

@@ -112,6 +112,64 @@
 					"typeStr": "15"
 				}
 			]
+		},
+		{
+			"name": "choice",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "id"
+				},
+				{
+					"typeStr": "1",
+					"name": "name",
+					"display": null
+				},
+				{
+					"typeStr": "5:Bed",
+					"name": "object",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "effects"
+				}
+			],
+			"lines": [
+				{
+					"id": "bed_sleep",
+					"object": 0,
+					"name": "Sleep",
+					"effects": [
+						{
+							"gauge": 1,
+							"value": 25
+						}
+					]
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "choice@effects",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "5:Libido,Health,Money,Social",
+					"name": "gauge",
+					"display": null
+				},
+				{
+					"typeStr": "4",
+					"name": "value",
+					"display": null
+				}
+			]
 		}
 	],
 	"customTypes": [],

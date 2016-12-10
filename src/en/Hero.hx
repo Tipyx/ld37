@@ -8,8 +8,8 @@ class Hero extends Entity {
 
     var spr             : mt.heaps.slib.HSprite;
 
-    public function new (ncx:Int, ncy:Int) {
-        super(ncx, ncy);
+    public function new (ncx:Int, ncy:Int, type) {
+        super(ncx, ncy, type);
 
         yr = 0.5;
 
@@ -78,9 +78,10 @@ class Hero extends Entity {
 
         super.update();
 
-        if (Game.ME.heroCanMove() && Game.ME.heroIsNearEntity()) {
-            if (hxd.Key.isPressed(Const.BTN_VALID))
-                UI.ME.openObjectWindow();
+        if (Game.ME.heroCanMove()) {
+            var object = Game.ME.heroIsNearObject();
+            if (hxd.Key.isPressed(Const.BTN_VALID) && object != null)
+                UI.ME.openObjectWindow(object);
         }
     }
 }
