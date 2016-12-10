@@ -1,0 +1,13 @@
+
+ss.png
+size: 64,64
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+hero
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

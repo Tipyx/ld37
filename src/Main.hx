@@ -8,6 +8,12 @@ class Main extends hxd.App
 		super.init();
 
 		ME = this;
+
+		Const.INIT();
+
+		DCDB.load(hxd.Res.data.entry.getBytes().toString());
+
+		engine.backgroundColor = 0xFFFFFF;
 		
 		game = new Game();
     }
@@ -20,10 +26,6 @@ class Main extends hxd.App
 
 	static function main() {
 		hxd.Res.initEmbed();
-		
-		// DCDB.load(hxd.Res.data.entry.getBytes().toString());
-		
-		// Const.INIT();
 		
 		new Main();
 	}
