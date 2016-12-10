@@ -1,4 +1,5 @@
 import en.*;
+import ui.*;
 
 class Game extends mt.Process {
 
@@ -11,6 +12,7 @@ class Game extends mt.Process {
 	// En
 	var hero                : Hero;
 	var bed                 : Bed;
+	var door                : Door;
 
 	public var arCol      	: Array<h2d.col.Point>;
 
@@ -28,6 +30,9 @@ class Game extends mt.Process {
 
 		// INIT LEVEL
 
+		var flooring = Const.SLB.h_get("flooring");
+		root.addChild(flooring);
+
 		arCol = [];
 
 		lvl = DCDB.ld.get(DCDB.LdKind.room);
@@ -42,14 +47,18 @@ class Game extends mt.Process {
 				gr.drawRect(0, 0, Const.GRID, Const.GRID);
 				gr.endFill();
 				gr.setPos(x * Const.GRID, y * Const.GRID);
-				arCol.push(new h2d.col.Point(x, y));
 			}
+			if (v > 0)
+				arCol.push(new h2d.col.Point(x, y));
 		}
 
 		// INIT ENTITIES
 
-		bed = new Bed (1, 7, Bed);
+		bed = new Bed(1, 7, Bed);
 		root.addChild(bed);
+
+		door = new Door(6, 12, Door);
+		root.addChild(door);
 
 		hero = new Hero(6, 6, null);
 		root.addChild(hero);

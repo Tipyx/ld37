@@ -16,9 +16,13 @@ class GD { // GameData
     public function AddXto(v:Float, gt:DCDB.Choice_effects_gauge) {
         switch (gt) {
             case Libido :
+                LIB += v;
             case Health :
+                HEA += v;
             case Money :
+                MON += v;
             case Social :
+                SOC += v;
         }
     }
 }

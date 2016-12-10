@@ -1,19 +1,26 @@
 
 ss.png
-size: 64,128
+size: 256,256
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 arrow
   rotate: false
-  xy: 1, 1
+  xy: 1, 196
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+flooring
+  rotate: false
+  xy: 1, 1
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
 hero
   rotate: false
-  xy: 1, 36
+  xy: 36, 196
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -81,7 +81,7 @@ class Hero extends Entity {
         if (Game.ME.heroCanMove()) {
             var object = Game.ME.heroIsNearObject();
             if (hxd.Key.isPressed(Const.BTN_VALID) && object != null)
-                UI.ME.openObjectWindow(object);
+                ui.UI.ME.openObjectWindow(object);
         }
     }
 }
