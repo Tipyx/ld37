@@ -13,7 +13,7 @@ class Main extends hxd.App
 
 		DCDB.load(hxd.Res.data.entry.getBytes().toString());
 
-		engine.backgroundColor = 0xFFFFFF;
+		engine.backgroundColor = 0x70481d;
 		
 		game = new Game();
     }
