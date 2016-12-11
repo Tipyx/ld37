@@ -145,6 +145,43 @@
 							"value": 25
 						}
 					]
+				},
+				{
+					"id": "bed_soloPleasure",
+					"name": "Solo pleasure",
+					"object": 0,
+					"effects": [
+						{
+							"gauge": 0,
+							"value": -25
+						}
+					]
+				},
+				{
+					"id": "door_goSchool",
+					"name": "Go to School",
+					"object": 1,
+					"effects": [
+						{
+							"gauge": 3,
+							"value": 20
+						}
+					]
+				},
+				{
+					"id": "door_timeWithFamily",
+					"name": "Spend time with family",
+					"object": 1,
+					"effects": [
+						{
+							"gauge": 3,
+							"value": 30
+						},
+						{
+							"gauge": 2,
+							"value": 10
+						}
+					]
 				}
 			],
 			"separators": [],

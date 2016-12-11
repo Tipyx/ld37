@@ -40,14 +40,7 @@ class Game extends mt.Process {
 		for (i in 0...ar.length) {
 			var v = ar[i];
 			var x = i % lvl.width;
-			var y = Std.int(i / lvl.width) ;
-			if (v == 1) {
-				var gr = new h2d.Graphics(root);
-				gr.beginFill(0x000000);
-				gr.drawRect(0, 0, Const.GRID, Const.GRID);
-				gr.endFill();
-				gr.setPos(x * Const.GRID, y * Const.GRID);
-			}
+			var y = Std.int(i / lvl.width);
 			if (v > 0)
 				arCol.push(new h2d.col.Point(x, y));
 		}

@@ -31,10 +31,10 @@ class Entity extends h2d.Layers {
 
         this.type = type;
 
-        var dbg = new h2d.Graphics(this);
-        dbg.lineStyle(1, 0xFF0000);
-        dbg.drawRect(0, 0, 1, 1);
-        this.add(dbg, 999);
+        // var dbg = new h2d.Graphics(this);
+        // dbg.lineStyle(1, 0xFF0000);
+        // dbg.drawRect(0, 0, 1, 1);
+        // this.add(dbg, 999);
 
         ALL.push(this);
     }

@@ -19,19 +19,19 @@ class UI extends mt.Process {
         createRoot(Main.ME.s2d);
 
         gauLib = new GaugeUI(Libido, true);
-        gauLib.setPos(Const.GRID * Const.SCALE * 3.5 - GaugeUI.WID, mt.Metrics.h() - Const.GRID * 4 * 1.6);
+        gauLib.setPos(Const.GRID * Const.SCALE * 4 - GaugeUI.WID, mt.Metrics.h() - Const.GRID * 4 * 2);
         root.addChild(gauLib);
 
         gauHea = new GaugeUI(Health, true);
-        gauHea.setPos(Const.GRID * Const.SCALE * 3.5 - GaugeUI.WID, mt.Metrics.h() - Const.GRID * 4 * 0.6);
+        gauHea.setPos(Const.GRID * Const.SCALE * 4 - GaugeUI.WID, mt.Metrics.h() - Const.GRID * 4 * 1);
         root.addChild(gauHea);
 
         gauMon = new GaugeUI(Money, false);
-        gauMon.setPos(Const.GRID * Const.SCALE * 8.5, mt.Metrics.h() - Const.GRID * 4 * 1.6);
+        gauMon.setPos(Const.GRID * Const.SCALE * 8, mt.Metrics.h() - Const.GRID * 4 * 2);
         root.addChild(gauMon);
 
         gauSoc = new GaugeUI(Social, false);
-        gauSoc.setPos(Const.GRID * Const.SCALE * 8.5, mt.Metrics.h() - Const.GRID * 4 * 0.6);
+        gauSoc.setPos(Const.GRID * Const.SCALE * 8, mt.Metrics.h() - Const.GRID * 4 * 1);
         root.addChild(gauSoc);
     }
 
