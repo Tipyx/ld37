@@ -14,15 +14,23 @@ class GD { // GameData
     }
 
     public function AddXto(v:Float, gt:DCDB.Choice_effects_gauge) {
+        var tw = Game.ME.tw;
+
         switch (gt) {
             case Libido :
-                LIB += v;
+                tw.createS(LIB, LIB + v, 1);
             case Health :
-                HEA += v;
+                tw.createS(HEA, HEA + v, 1);
             case Money :
-                MON += v;
+                tw.createS(MON, MON + v, 1);
             case Social :
-                SOC += v;
+                tw.createS(SOC, SOC + v, 1);
         }
+
+        if (LIB <= 0
+        ||  HEA <= 0
+        ||  MON <= 0
+        ||  SOC <= 0)
+            throw "GameOver";
     }
 }

@@ -13,6 +13,8 @@ class Game extends mt.Process {
 	var hero                : Hero;
 	var bed                 : Bed;
 	var door                : Door;
+	var pc               	: PC;
+	var console            	: Console;
 
 	public var arCol      	: Array<h2d.col.Point>;
 
@@ -27,6 +29,8 @@ class Game extends mt.Process {
 		createRoot(Main.ME.s2d);
 
 		root.setScale(Const.SCALE);
+		root.y += (Const.GRID >>1) * Const.SCALE;
+
 
 		// INIT LEVEL
 
@@ -47,13 +51,19 @@ class Game extends mt.Process {
 
 		// INIT ENTITIES
 
-		bed = new Bed(1, 7, Bed);
+		bed = new Bed(1, 9, Bed);
 		root.addChild(bed);
 
-		door = new Door(6, 12, Door);
+		door = new Door(6, 3, Door);
 		root.addChild(door);
 
-		hero = new Hero(6, 6, null);
+		pc = new PC(10, 8, PC);
+		root.addChild(pc);
+
+		console = new Console(5, 9, Console);
+		root.addChild(console);
+
+		hero = new Hero(6, 8, null);
 		root.addChild(hero);
 
 		// OTHERS
@@ -104,7 +114,7 @@ class Game extends mt.Process {
 	public function heroIsNearObject():Null<DCDB.Choice_object> {
 		for (e in Entity.ALL) {
 			if (e != hero) {
-				if (mt.deepnight.Lib.distanceSqr(e.xx, e.yy, hero.xx, hero.yy) <= Const.GRID * Const.GRID)
+				if (mt.deepnight.Lib.distanceSqr(e.xx, e.yy, hero.xx, hero.yy) <= (Const.GRID * 1.5) * (Const.GRID * 1.5))
 					return e.type;
 			}
 		}

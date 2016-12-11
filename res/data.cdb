@@ -41,7 +41,7 @@
 								"file": "col.png",
 								"size": 16,
 								"stride": 4,
-								"data": "AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQACAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQACAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQABAAEAAQABAAAAAAABAAEAAQABAAEAAAAAAAAAAAABAAAAAAABAAAAAAAAAAAAAAAAAAAAAAABAAAAAAABAAAAAAAAAAAA"
+								"data": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQACAAAAAAAAAAAAAAAAAAAAAAACAAEAAQACAAAAAAAAAAIAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA"
 							}
 						},
 						{
@@ -126,8 +126,13 @@
 					"display": null
 				},
 				{
-					"typeStr": "5:Bed,Door",
+					"typeStr": "5:Bed,Door,PC,Console",
 					"name": "object"
+				},
+				{
+					"typeStr": "8",
+					"name": "time",
+					"display": null
 				},
 				{
 					"typeStr": "8",
@@ -144,6 +149,11 @@
 							"gauge": 1,
 							"value": 25
 						}
+					],
+					"time": [
+						{
+							"Time": 3
+						}
 					]
 				},
 				{
@@ -153,18 +163,31 @@
 					"effects": [
 						{
 							"gauge": 0,
-							"value": -25
+							"value": 25
+						}
+					],
+					"time": [
+						{
+							"Time": 0
+						},
+						{
+							"Time": 2
 						}
 					]
 				},
 				{
-					"id": "door_goSchool",
-					"name": "Go to School",
+					"id": "door_seeFriends",
+					"name": "See some friends",
 					"object": 1,
 					"effects": [
 						{
 							"gauge": 3,
 							"value": 20
+						}
+					],
+					"time": [
+						{
+							"Time": 1
 						}
 					]
 				},
@@ -181,11 +204,190 @@
 							"gauge": 2,
 							"value": 10
 						}
+					],
+					"time": [
+						{
+							"Time": 1
+						}
+					]
+				},
+				{
+					"id": "door_nightClub",
+					"name": "Go to the Nightclub",
+					"object": 1,
+					"time": [
+						{
+							"Time": 3
+						}
+					],
+					"effects": [
+						{
+							"gauge": 3,
+							"value": 30
+						},
+						{
+							"gauge": 0,
+							"value": -10
+						},
+						{
+							"gauge": 2,
+							"value": 20
+						}
+					]
+				},
+				{
+					"id": "pc_mmo",
+					"name": "Play MMO",
+					"object": 2,
+					"effects": [
+						{
+							"gauge": 2,
+							"value": -13
+						},
+						{
+							"gauge": 3,
+							"value": 10
+						},
+						{
+							"gauge": 1,
+							"value": -10
+						}
+					],
+					"time": [
+						{
+							"Time": 2
+						}
+					]
+				},
+				{
+					"id": "pc_mmoNight",
+					"name": "Play MMO all night",
+					"object": 2,
+					"time": [
+						{
+							"Time": 3
+						}
+					],
+					"effects": [
+						{
+							"gauge": 2,
+							"value": -13
+						},
+						{
+							"gauge": 3,
+							"value": 20
+						},
+						{
+							"gauge": 1,
+							"value": -30
+						}
+					]
+				},
+				{
+					"id": "pc_pron",
+					"name": "Watch some pr0n...",
+					"object": 2,
+					"effects": [
+						{
+							"gauge": 0,
+							"value": 25
+						},
+						{
+							"gauge": 2,
+							"value": -15
+						}
+					],
+					"time": [
+						{
+							"Time": 0
+						},
+						{
+							"Time": 2
+						}
+					]
+				},
+				{
+					"id": "pc_chat",
+					"name": "Chatting",
+					"object": 2,
+					"time": [
+						{
+							"Time": 0
+						},
+						{
+							"Time": 1
+						},
+						{
+							"Time": 2
+						},
+						{
+							"Time": 3
+						}
+					],
+					"effects": [
+						{
+							"gauge": 3,
+							"value": 15
+						}
+					]
+				},
+				{
+					"id": "console_streamGame",
+					"name": "Play and stream your game",
+					"object": 3,
+					"effects": [
+						{
+							"gauge": 1,
+							"value": -10
+						},
+						{
+							"gauge": 2,
+							"value": 20
+						}
+					],
+					"time": [
+						{
+							"Time": 1
+						},
+						{
+							"Time": 2
+						}
+					]
+				},
+				{
+					"id": "console_playBuddies",
+					"name": "Play with some buddies",
+					"object": 3,
+					"time": [
+						{
+							"Time": 2
+						},
+						{
+							"Time": 0
+						}
+					],
+					"effects": [
+						{
+							"gauge": 3,
+							"value": 20
+						}
 					]
 				}
 			],
-			"separators": [],
-			"props": {}
+			"separators": [
+				0,
+				2,
+				5,
+				9
+			],
+			"props": {
+				"separatorTitles": [
+					"BED",
+					"DOOR",
+					"PC",
+					"CONSOLE"
+				]
+			}
 		},
 		{
 			"name": "choice@effects",
@@ -203,6 +405,21 @@
 				{
 					"typeStr": "4",
 					"name": "value",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "choice@time",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "5:Morning,Day,Evening,Night",
+					"name": "Time",
 					"display": null
 				}
 			]

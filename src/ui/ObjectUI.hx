@@ -7,7 +7,8 @@ class ObjectUI extends h2d.Layers {
     var arChoice            : Array<ChoiceUI>;
     var curChoiceIndex      : Int;
 
-    var wid                 = 300;
+    public var wid          = 700;
+    public var hei          : Int;
     var offsetX             = 10;
     var offsetY             = 10;
 
@@ -40,38 +41,49 @@ class ObjectUI extends h2d.Layers {
         
         initChoice(separator.y + 1 + 10);
 
-        var hei = this.getBounds().height;
+        hei = Std.int(this.getBounds().height);
 
         var bg = new h2d.Graphics();
         bg.lineStyle(4, 0x2a7cbf);
-        bg.beginFill(0x0d273d, 0.8);
+        bg.beginFill(0x0d273d, 0.95);
         bg.drawRect(0, 0, wid, hei + offsetY * 2);
         bg.endFill();
         this.add(bg, 0);
+
+        arrow = Const.SLB.h_get("arrow", 0, 1, 0.5);
+        arrow.visible = arChoice.length > 0;
+        this.add(arrow, 2);
+
+        hei += offsetY * 2;
     }
 
     inline function getNameObject():String {
         return switch (object) {
             case Bed : "Bed";
             case Door : "Door";
+            case PC : "PC";
+            case Console : "PlaySwitch : The One";
         }
     }
 
     function initChoice(baseY:Float) {
-        var cds = DCDB.choice.all.filter(function (f) return f.object == object);
+        var cds = DCDB.choice.all.filter(function (f)  {
+            var time = false;
+            for (t in f.time)
+                if (t.Time == UI.ME.curTime)
+                    time = true;
+
+            return f.object == object && time;
+        });
 
         for (cd in cds) {
-            var choice = new ChoiceUI(cd);
+            var choice = new ChoiceUI(this, cd);
             choice.x = offsetX;
             choice.y = Std.int(baseY);
             baseY += choice.getBounds().height + 10;
             arChoice.push(choice);
             this.add(choice, 1);
         }
-
-        arrow = Const.SLB.h_get("arrow", 0, 1, 0.5);
-        arrow.visible = arChoice.length > 0;
-        this.add(arrow, 2);
     }
 
     public function destroy() {

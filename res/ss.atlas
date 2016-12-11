@@ -25,3 +25,59 @@ hero
   orig: 32, 32
   offset: 0, 0
   index: -1
+iconDollar
+  rotate: false
+  xy: 1, 231
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+iconHealth
+  rotate: false
+  xy: 20, 231
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+iconSex
+  rotate: false
+  xy: 39, 231
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+iconSocial
+  rotate: false
+  xy: 58, 231
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+timeDay
+  rotate: false
+  xy: 71, 196
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+timeEvening
+  rotate: false
+  xy: 106, 196
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+timeMorning
+  rotate: false
+  xy: 141, 196
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+timeNight
+  rotate: false
+  xy: 176, 196
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
