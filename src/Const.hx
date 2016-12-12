@@ -7,7 +7,8 @@ class Const {
 
     public static var GRID              = 16;
 
-    public static var BTN_VALID         = hxd.Key.W;
+    public static var BTN_VALID_1       = hxd.Key.W;
+    public static var BTN_VALID_2       = hxd.Key.Z;
     public static var BTN_CANCEL        = hxd.Key.X;
 
     public static function INIT() {

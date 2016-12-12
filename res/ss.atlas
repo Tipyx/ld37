@@ -1,12 +1,12 @@
 
 ss.png
-size: 256,256
+size: 256,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 arrow
   rotate: false
-  xy: 1, 196
+  xy: 196, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -20,64 +20,99 @@ flooring
   index: -1
 hero
   rotate: false
-  xy: 36, 196
-  size: 32, 32
-  orig: 32, 32
+  xy: 231, 77
+  size: 12, 19
+  orig: 12, 19
+  offset: 0, 0
+  index: -1
+heroBack
+  rotate: false
+  xy: 231, 99
+  size: 12, 19
+  orig: 12, 19
+  offset: 0, 0
+  index: -1
+heroSide
+  rotate: false
+  xy: 231, 121
+  size: 12, 19
+  orig: 12, 19
   offset: 0, 0
   index: -1
 iconDollar
   rotate: false
-  xy: 1, 231
+  xy: 231, 1
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 iconHealth
   rotate: false
-  xy: 20, 231
+  xy: 231, 20
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 iconSex
   rotate: false
-  xy: 39, 231
+  xy: 231, 39
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 iconSocial
   rotate: false
-  xy: 58, 231
+  xy: 231, 58
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+outlineGauge
+  rotate: false
+  xy: 1, 196
+  size: 160, 16
+  orig: 160, 16
+  offset: 0, 0
+  index: -1
+time
+  rotate: false
+  xy: 164, 196
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 timeDay
   rotate: false
-  xy: 71, 196
+  xy: 196, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 timeEvening
   rotate: false
-  xy: 106, 196
+  xy: 196, 71
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 timeMorning
   rotate: false
-  xy: 141, 196
+  xy: 196, 106
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 timeNight
   rotate: false
-  xy: 176, 196
+  xy: 196, 141
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+wp
+  rotate: false
+  xy: 250, 1
+  size: 1, 1
+  orig: 1, 1
   offset: 0, 0
   index: -1

@@ -8,6 +8,9 @@ class Hero extends Entity {
 
     var spr             : mt.heaps.slib.HSprite;
 
+    var nearObject      : Null<DCDB.Choice_object>;
+    var textQM          : h2d.Text;
+
     public function new (ncx:Int, ncy:Int, type) {
         super(ncx, ncy, type);
 
@@ -15,22 +18,43 @@ class Hero extends Entity {
 
         wid = hei = 1;
 
+        nearObject = null;
+
         spr = Const.SLB.h_get("hero", 0.5, 1);
+        // spr.anim.regi
         this.add(spr, 0);
+
+        textQM = new h2d.Text(Const.FONT);
+        textQM.text = "?";
+        textQM.x = (-textQM.textWidth >> 1) +1;
+        textQM.textColor = 0;
+        textQM.alpha = 0;
+        this.add(textQM, 0);
     }
 
     override public function update() {
         {   // ------- PHYSICS -------
             if (Game.ME.heroCanMove()) {
-                if (hxd.Key.isDown(hxd.Key.LEFT))
+                if (hxd.Key.isDown(hxd.Key.LEFT)) {
                     dx -= SPEED;
-                else if (hxd.Key.isDown(hxd.Key.RIGHT))
+                    spr.set("heroSide");
+                    spr.scaleX = 1;
+                }
+                else if (hxd.Key.isDown(hxd.Key.RIGHT)) {
                     dx += SPEED;
+                    spr.set("heroSide");
+                    spr.scaleX = -1;
+                }
 
-                if (hxd.Key.isDown(hxd.Key.UP))
+                if (hxd.Key.isDown(hxd.Key.UP)) {
                     dy -= SPEED;
-                else if (hxd.Key.isDown(hxd.Key.DOWN))
+                    if (!hxd.Key.isDown(hxd.Key.LEFT) && !hxd.Key.isDown(hxd.Key.RIGHT))
+                        spr.set("heroBack");
+                }
+                else if (hxd.Key.isDown(hxd.Key.DOWN)) {
                     dy += SPEED;
+                    spr.set("hero");
+                }
             }
 
             xr+=dx;
@@ -74,14 +98,31 @@ class Hero extends Entity {
                 cy--;
                 yr++;
             }
+
+            if (dx >= -0.01 && dx <= 0.01)
+                dx = 0;
+            if (dy >= -0.01 && dy <= 0.01)
+                dy = 0;
         }
 
         super.update();
 
+        nearObject = Game.ME.heroIsNearObject();
+
+        if (Game.ME.tw.count() == 0) {
+            if (nearObject != null && textQM.alpha == 0) {
+                Game.ME.tw.createS(textQM.alpha, 1, 0.2);
+                textQM.y = -spr.tile.height - Const.GRID;
+                Game.ME.tw.createS(textQM.y, -spr.tile.height - Const.GRID - 5, 0.2);
+            }
+            else if (nearObject == null && textQM.alpha == 1) {
+                Game.ME.tw.createS(textQM.alpha, 0, 0.2);
+            }
+        }
+
         if (Game.ME.heroCanMove()) {
-            var object = Game.ME.heroIsNearObject();
-            if (hxd.Key.isPressed(Const.BTN_VALID) && object != null)
-                ui.UI.ME.openObjectWindow(object);
+            if ((hxd.Key.isPressed(Const.BTN_VALID_1) || hxd.Key.isPressed(Const.BTN_VALID_2)) && nearObject != null)
+                ui.UI.ME.openObjectWindow(nearObject);
         }
     }
 }

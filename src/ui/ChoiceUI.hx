@@ -45,7 +45,7 @@ class ChoiceUI extends h2d.Layers {
         var idIcon = switch(e.gauge) {
             case Libido : "iconSex";
             case Money : "iconDollar";
-            case Social : "iconSocial";
+            case Friends : "iconSocial";
             case Health : "iconHealth";
         }
         var icon = Const.SLB.h_get(idIcon, 0, 0, 0.5);
@@ -80,11 +80,7 @@ class ChoiceUI extends h2d.Layers {
     }
 
     public function onValid() {
-        for (e in c.effects) {
-            GD.ME.AddXto(e.value, e.gauge);
-        }
-
-        UI.ME.moveToNextTime();
+        Game.ME.onValid(c.effects.toArrayCopy());
     }
 
     public function destroy() {

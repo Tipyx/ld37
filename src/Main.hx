@@ -1,7 +1,5 @@
 class Main extends hxd.App
 {
-	var game					: Game;
-
 	public static var ME		: Main;
 
     override function init() {
@@ -14,8 +12,9 @@ class Main extends hxd.App
 		DCDB.load(hxd.Res.data.entry.getBytes().toString());
 
 		engine.backgroundColor = 0x0F0C12;
-		
-		game = new Game();
+
+		new Intro();
+		// new Game();
     }
 
 	override public function update(dt:Float) {

@@ -7,7 +7,7 @@ class UI extends mt.Process {
     var gauLib              : GaugeUI;
     var gauHea              : GaugeUI;
     var gauMon              : GaugeUI;
-    var gauSoc              : GaugeUI;
+    var gauFri              : GaugeUI;
 
     var ow                  : ObjectUI;
 
@@ -31,12 +31,12 @@ class UI extends mt.Process {
         gauMon = new GaugeUI(Money);
         gauMon.root.setPos(Const.GRID * Const.SCALE * 8, Const.GRID * 4 * 0.5);
 
-        gauSoc = new GaugeUI(Social);
-        gauSoc.root.setPos(Const.GRID * Const.SCALE * 8, Const.GRID * 4 * 1.5);
+        gauFri = new GaugeUI(Friends);
+        gauFri.root.setPos(Const.GRID * Const.SCALE * 8, Const.GRID * 4 * 1.5);
 
         curTime = DCDB.Choice_time_Time.Morning;
 
-        iconTime = Const.SLB.h_get(getTimeIcon());
+        iconTime = Const.SLB.h_get("time", 0.5, 0.5);
         iconTime.setScale(4);
         root.addChild(iconTime);
 
@@ -76,7 +76,7 @@ class UI extends mt.Process {
         }
     }
 
-    inline function getTimeText() {
+    public inline function getTimeText() {
         return switch (curTime) {
             case DCDB.Choice_time_Time.Morning : "Morning";
             case DCDB.Choice_time_Time.Day : "Day";
@@ -86,15 +86,38 @@ class UI extends mt.Process {
     }
 
     public function moveToNextTime() {
-        curTime = switch (curTime) {
-            case DCDB.Choice_time_Time.Morning : DCDB.Choice_time_Time.Day;
-            case DCDB.Choice_time_Time.Day : DCDB.Choice_time_Time.Evening;
-            case DCDB.Choice_time_Time.Evening : DCDB.Choice_time_Time.Night;
-            case DCDB.Choice_time_Time.Night : DCDB.Choice_time_Time.Morning;
+        switch (curTime) {
+            case DCDB.Choice_time_Time.Morning :
+                curTime = DCDB.Choice_time_Time.Day;
+                tw.createS(iconTime.rotation, Math.PI * 0.5, 0.5);
+            case DCDB.Choice_time_Time.Day :
+                curTime = DCDB.Choice_time_Time.Evening;
+                tw.createS(iconTime.rotation, Math.PI, 0.5);
+            case DCDB.Choice_time_Time.Evening :
+                curTime = DCDB.Choice_time_Time.Night;
+                tw.createS(iconTime.rotation, Math.PI * 1.5, 0.5);
+            case DCDB.Choice_time_Time.Night :
+                curTime = DCDB.Choice_time_Time.Morning;
+                tw.createS(iconTime.rotation, Math.PI * 2, 0.5).onEnd = function () { iconTime.rotation = 0; };
         }
 
-        iconTime.set(getTimeIcon());
-        textTime.text = getTimeText();
+        tw.createS(textTime.alpha, 1 > 0, 0.25).onEnd = function () {
+            textTime.text = getTimeText();
+            tw.createS(textTime.alpha, 0 > 1, 0.25);
+        };
+    }
+
+    public function hlGauge(gt:DCDB.Choice_effects_gauge, isAdding:Bool) {
+        switch (gt) {
+            case Libido :
+                gauLib.hl(isAdding);
+            case Health :
+                gauHea.hl(isAdding);
+            case Money :
+                gauMon.hl(isAdding);
+            case Friends :
+                gauFri.hl(isAdding);
+        }
     }
 
     override public function update() {

@@ -4,14 +4,15 @@ class GaugeUI extends mt.Process {
 
     var gt              : DCDB.Choice_effects_gauge;
 
-    public static var WID = Const.GRID * 2.5 * Const.SCALE;
-
+    public static var WID = Const.GRID * 2.5 * 4;
     public var point    : Float;
 
-    var gauge           : h2d.Graphics;
+    var gauge           : mt.heaps.slib.HSprite;
     var icon            : mt.heaps.slib.HSprite;
     var redIcon         : mt.heaps.slib.HSprite;
     var greIcon         : mt.heaps.slib.HSprite;
+
+    var baseSX          : Float;
 
     public function new(gt:DCDB.Choice_effects_gauge) {
         super(UI.ME);
@@ -20,55 +21,60 @@ class GaugeUI extends mt.Process {
 
         this.gt = gt;
 
-        var gaugeBG = new h2d.Graphics();
-        gaugeBG.beginFill(0xFFFFFF);
-        gaugeBG.drawRect(0, 0, WID, Const.GRID);
-        root.addChild(gaugeBG);
+        baseSX = WID;
 
-        gauge = new h2d.Graphics();
-        gauge.beginFill(0x00AA00);
-        gauge.drawRect(0, 0, WID, Const.GRID);
-        gauge.scaleX = 0.5;
+        gauge = Const.SLB.h_get("wp");
+        gauge.scaleX = baseSX;
+        gauge.scaleY = Const.GRID;
         root.addChild(gauge);
 
-        var outline = new h2d.Graphics();
-        outline.lineStyle(4, 0);
-        outline.drawRect(0, 0, WID, Const.GRID);
-        root.addChild(outline);
+        var gaugeBG = Const.SLB.h_get("outlineGauge");
+        root.addChild(gaugeBG);
 
         var idIcon = switch(gt) {
             case Libido : "iconSex";
             case Money : "iconDollar";
-            case Social : "iconSocial";
+            case Friends : "iconSocial";
             case Health : "iconHealth";
         }
-        icon = Const.SLB.h_get(idIcon, 0, 1, 0.5);
+        icon = Const.SLB.h_get(idIcon, 0, 0.5, 0.5);
         icon.setScale(3);
-        icon.x = -Const.GRID;
+        icon.x = -Const.GRID * 2;
         icon.y = Const.GRID >> 1;
         root.addChild(icon);
 
-        redIcon = Const.SLB.h_get(idIcon, 0, 1, 0.5);
+        redIcon = Const.SLB.h_get(idIcon, 0, 0.5, 0.5);
         redIcon.setScale(icon.scaleX);
-        redIcon.x = -Const.GRID;
-        redIcon.y = Const.GRID >> 1;
+        redIcon.x = icon.x;
+        redIcon.y = icon.y;
         redIcon.alpha = 0;
         redIcon.colorize(0xFF0000);
         root.addChild(redIcon);
 
-        greIcon = Const.SLB.h_get(idIcon, 0, 1, 0.5);
+        greIcon = Const.SLB.h_get(idIcon, 0, 0.5, 0.5);
         greIcon.setScale(icon.scaleX);
-        greIcon.x = -Const.GRID;
-        greIcon.y = Const.GRID >> 1;
+        greIcon.x = icon.x;
+        greIcon.y = icon.y;
         greIcon.alpha = 0;
         greIcon.colorize(0x00FF00);
         root.addChild(greIcon);
     }
 
+    public function hl(isAdding:Bool) {
+        if (isAdding) {
+            tw.createS(greIcon.alpha, 1 > 0, 1);
+            tw.createS(greIcon.scaleX, 3 > 4.5, 1);
+            tw.createS(greIcon.scaleY, 3 > 4.5, 1);
+        }
+        else {
+            tw.createS(redIcon.alpha, 1 > 0, 1);
+            tw.createS(redIcon.scaleX, 4.5 > 3, 1);
+            tw.createS(redIcon.scaleY, 4.5 > 3, 1);
+        }
+    }
+
     override public function update() {
         super.update();
-
-        var oldX = gauge.scaleX;
 
         switch (gt) {
             case Libido :
@@ -77,8 +83,8 @@ class GaugeUI extends mt.Process {
                 gauge.scaleX = GD.ME.HEA / 100;
             case Money :
                 gauge.scaleX = GD.ME.MON / 100;
-            case Social :
-                gauge.scaleX = GD.ME.SOC / 100;
+            case Friends :
+                gauge.scaleX = GD.ME.FRI / 100;
         }
 
         if (gauge.scaleX > 1)
@@ -86,13 +92,13 @@ class GaugeUI extends mt.Process {
         else if (gauge.scaleX < 0)
             gauge.scaleX = 0;
 
-        if (tw.count() == 0) {
-            if (gauge.scaleX > oldX) {
-                tw.createS(greIcon.alpha, 1 > 0, 1.5);
-            }
-            else if (gauge.scaleX < oldX) {
-                 tw.createS(redIcon.alpha, 1 > 0, 1.5);
-            }
-        }
+        if (gauge.scaleX <= 0.25)
+            gauge.colorize(0xb82521);
+        else if (gauge.scaleX <= 0.50)
+            gauge.colorize(0xb87321);
+        else
+            gauge.colorize(0x26b821);
+
+        gauge.scaleX *= baseSX;
     }
 }

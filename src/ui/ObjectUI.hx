@@ -107,7 +107,7 @@ class ObjectUI extends h2d.Layers {
         
         if (hxd.Key.isPressed(Const.BTN_CANCEL))
             UI.ME.closeObjectWindow();
-        else if (arChoice.length > 0 && hxd.Key.isPressed(Const.BTN_VALID)) {
+        else if (arChoice.length > 0 && (hxd.Key.isPressed(Const.BTN_VALID_1) || hxd.Key.isPressed(Const.BTN_VALID_2))) {
             arChoice[curChoiceIndex].onValid();
             UI.ME.closeObjectWindow();
         }

@@ -21,6 +21,10 @@ class Game extends mt.Process {
 	var gd					: GD;
 	var ui					: UI;
 
+	public var heroLock		: Bool;
+
+	public var cm			: mt.deepnight.Cinematic;
+
 	public function new() {
 		super();
 
@@ -28,9 +32,17 @@ class Game extends mt.Process {
 
 		createRoot(Main.ME.s2d);
 
-		root.setScale(Const.SCALE);
-		root.y += (Const.GRID >>1) * Const.SCALE;
+		cm = new mt.deepnight.Cinematic(60);
 
+		root.setScale(Const.SCALE);
+
+		root.y = -mt.Metrics.h();
+		tw.createS(root.y, (Const.GRID >>1) * Const.SCALE, 2).onEnd = function () {
+			tw.createS(ui.root.alpha, 1, 0.5);
+		};
+		// root.y += (Const.GRID >>1) * Const.SCALE;
+
+		heroLock = false;
 
 		// INIT LEVEL
 
@@ -63,7 +75,7 @@ class Game extends mt.Process {
 		console = new Console(5, 9, Console);
 		root.addChild(console);
 
-		hero = new Hero(6, 8, null);
+		hero = new Hero(5, 6, null);
 		root.addChild(hero);
 
 		// OTHERS
@@ -71,6 +83,7 @@ class Game extends mt.Process {
 		gd = new GD();
 		
 		ui = new UI();
+		ui.root.alpha = 0;
 		addChild(ui);
 
 		debug();
@@ -94,6 +107,48 @@ class Game extends mt.Process {
 		});
 	}
 
+    public function onValid(arEff:Array<DCDB.Choice_effects>) {
+        heroLock = true;
+
+        cm.create({
+            for (e in arEff) {
+                GD.ME.addXto(e.value, e.gauge);
+            }
+            1000;
+
+            ui.moveToNextTime();
+            if (ui.curTime == Night) {
+                gd.onEndDay();
+                1100;
+            }
+            else
+                500;
+
+            heroLock = false;
+        });
+
+		delayer.addS(function() {
+			if(GD.ME.checkGameOver())
+				gameOver();
+		}, 2.5);
+    }
+
+	function gameOver() {
+		var gr = Const.SLB.h_get("wp");
+		gr.colorize(0xFF0000);
+		gr.blendMode = Add;
+		gr.scaleX = mt.Metrics.w();
+		gr.scaleY = mt.Metrics.h();
+		Main.ME.s2d.addChild(gr);
+
+		tw.createS(root.alpha, 1 > 0, 1);
+		tw.createS(gr.alpha, 1 > 0, 1).onEnd = function () {
+			new End();
+		};
+
+		heroLock = true;
+	}
+
     public function checkCol(ncx:Float, ncy:Float):Bool {
         if (ncx < 0 || ncx >= 12 || ncy < 0 || ncy >= 12)
             return true;
@@ -108,7 +163,7 @@ class Game extends mt.Process {
     }
 
 	public function heroCanMove():Bool {
-		return !ui.objectWindowIsOpen();
+		return !ui.objectWindowIsOpen() && !heroLock;
 	}
 
 	public function heroIsNearObject():Null<DCDB.Choice_object> {
@@ -125,11 +180,12 @@ class Game extends mt.Process {
 	override public function update() {
 		super.update();
 
+		cm.update(dt);
+
 		for (e in Entity.ALL)
 			e.update();
 
-		if (hxd.Key.isPressed(hxd.Key.Y)) {
-			// ui.openObjectWindow();
-		}
+		// if(hxd.Key.isPressed(hxd.Key.Y))
+		// 	gameOver();
 	}
 }
